@@ -1,5 +1,5 @@
 {
-  "name": "dns-zone-blacklist",
+  "name": "dns-zone-blocklist",
   "version": "2.0.0",
   "description": "A tool to convert host file data to bind and dnsmasq dns entries for use with oznu/dns-ad-blocker.",
   "main": "build.js",
