@@ -44,6 +44,6 @@ The compiled blacklist files will be saved to the `./bind`, `./dnsmasq` and `./u
 
 Custom entries can be added to the custom.blacklist.json file in the root of this project before building.
 
-### Whitelist
+### Allowlist
 
-Any domains you wish to exclude from the blacklist can be added to the custom.whitelist.json file in the root of this project before building.
+Any domains you wish to exclude from the blacklist can be added to the custom.allowlist.json file in the root of this project before building.

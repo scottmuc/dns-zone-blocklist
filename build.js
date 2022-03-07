@@ -9,7 +9,7 @@ const tlds = require('tlds')
 
 class Blacklist {
   constructor () {
-    this.whitelist = require('./custom.whitelist')
+    this.allowlist = require('./custom.allowlist')
     this.blacklist = require('./custom.blacklist')
 
     this.formats = [
@@ -57,7 +57,7 @@ class Blacklist {
       .map(x => x.trim())
       .filter(x => !(x === '' || x.charAt(0) === '#'))
       .map(x => x.split(' ')[1])
-      .filter(x => !this.whitelist.includes(x))
+      .filter(x => !this.allowlist.includes(x))
       .sort((a, b) => a.length - b.length)
       .map(host => {
         if (!this.blacklist.find(x => host.slice(-Math.abs(x.length + 1)) === '.' + x) && !tlds.includes(host)) {
