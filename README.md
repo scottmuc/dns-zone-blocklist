@@ -1,4 +1,8 @@
+[![.github/workflows/build.yaml](https://github.com/scottmuc/dns-zone-blocklist/actions/workflows/build.yaml/badge.svg)](https://github.com/scottmuc/dns-zone-blocklist/actions/workflows/build.yaml)
+
 # DNS Zone Blocklist Generator
+
+**Credit goes to oznu that set this up here: https://github.com/oznu/dns-zone-blacklist**
 
 This project generates a zone file for [BIND](https://en.wikipedia.org/wiki/BIND), [Dnsmasq](https://en.wikipedia.org/wiki/Dnsmasq) and [Unbound](https://en.wikipedia.org/wiki/Unbound_(DNS_server)) DNS servers using data from the [StevenBlack/hosts](https://github.com/StevenBlack/hosts) project. The generated zone files can be used to block ads and malware for an entire network when used with a local DNS server.
 
