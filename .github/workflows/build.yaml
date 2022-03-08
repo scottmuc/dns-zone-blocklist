@@ -3,6 +3,13 @@ on:
     branches:
     - main
 
+    # Ignore the outputs of the build
+    paths-ignore:
+    - 'bind/*'
+    - 'unbound/*'
+    - 'dnsmasq/*'
+    - 'README.md'
+
 name: Continuous Integration
 
 jobs:
@@ -19,6 +26,18 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
 
+    - name: Fetch the latest hosts
+      run: 'npm install && node build.js'
+
     - name: Run the tests
       run: ./test.sh
+
+    # learnt from https://gist.github.com/anshumanb/16bf5e89354485f37912888d04d1be42
+    - name: Commit the results
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .
+        git diff-index --quiet HEAD || git commit -m "Automated sync"
+        git push
 
