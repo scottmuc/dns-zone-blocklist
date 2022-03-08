@@ -26,11 +26,13 @@ jobs:
       run: ./test.sh
 
     # learnt from https://gist.github.com/anshumanb/16bf5e89354485f37912888d04d1be42
+    # Also, commits pushed via the internal PAT don't trigger infinite Actions loops
+    # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#using-the-github_token-in-a-workflow
     - name: Commit the results
       run: |
         git config user.name github-actions
         git config user.email github-actions@github.com
         git add .
-        git diff-index --quiet HEAD || git commit -m "Automated sync"
+        git diff-index --quiet HEAD || git commit -m "Automated update: $(date)"
         git push
 
