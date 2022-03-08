@@ -3,13 +3,6 @@ on:
     branches:
     - main
 
-    # Ignore the outputs of the build
-    paths-ignore:
-    - 'bind/*'
-    - 'unbound/*'
-    - 'dnsmasq/*'
-    - 'README.md'
-
 name: Continuous Integration
 
 jobs:
