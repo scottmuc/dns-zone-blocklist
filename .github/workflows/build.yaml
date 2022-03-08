@@ -2,9 +2,10 @@ on:
   push:
     branches:
     - main
-  # https://crontab.guru/#12_21_*_*_7
+  # https://crontab.guru/#12_21_*_*_0
+  # At 21:12 on Sunday
   schedule:
-  - cron: '12 21 * * 7' # At 21:12 every Sunday
+    - cron: '12 21 * * 0'
 
 name: Continuous Integration
 
