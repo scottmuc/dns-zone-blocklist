@@ -2,7 +2,7 @@
 
 set -e
 
-docker build dns-zone-test .
+docker build --tag dns-zone-test .
 docker run --rm dns-zone-test \
     -v $PWD:/dns-zone-blocklist \
     -w /dns-zone-blocklist \
