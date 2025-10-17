@@ -17,6 +17,14 @@ main :: proc() {
 
 	it := string(data)
 	for line in strings.split_lines_iterator(&it) {
-		fmt.println(line)
+		// ignore empty lines and commented lines
+		if line == "" || strings.has_prefix(line, "#") {
+			continue
+		}
+		// expect every line to be of the form
+		// 0.0.0.0 some.fqdn
+		_, _, host := strings.partition(line, " ")
+		
+		fmt.println(host)
 	}
 }
