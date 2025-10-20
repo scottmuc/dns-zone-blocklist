@@ -1,15 +1,15 @@
-REPO_URL = https://github.com/StevenBlack/hosts.git
-REPO_DIR = git/StevenBlack/hosts
+SB_HOSTS_REPO = https://github.com/StevenBlack/hosts.git
+SB_HOST_PATH = git/StevenBlack/hosts
 ODIN = ~/workspace/Odin/odin 
 
 .PHONY: update
 
-run:
-	$(ODIN) run ./src
+run: $(SB_HOST_PATH)
+	$(ODIN) run ./src < $(SB_HOST_PATH)/hosts
 
-git/SteveBlack/hosts:
+$(SB_HOST_PATH):
 	mkdir -p git/StevenBlack
-	git clone $(REPO_URL) $(REPO_DIR)
+	git clone --deptch 1 $(SB_HOSTS_REPO) $(SB_HOST_PATH)
 
 update:
-	cd $(REPO_DIR) && git pull
+	cd $(SB_HOST_PATH) && git pull

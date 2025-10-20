@@ -5,19 +5,12 @@ import "core:os"
 import "core:strings"
 
 main :: proc() {
-	// IDEA rather than hard code the file path, or take a
-	// file path as an argument, I could consume stdin
-
-	// path is relative to PWD
-	hostsPath := "git/StevenBlack/hosts/hosts"
-
-	// https://odin-lang.org/news/read-a-file-line-by-line/
-	data, ok := os.read_entire_file(hostsPath, context.allocator)
+	data, ok := os.read_entire_file(os.stdin)
 	if !ok {
-		fmt.eprintln("Failed to read git/StevenBlack/hosts/hosts")
+		fmt.eprintln("Failed to read hosts from stdin")
 		os.exit(1)
 	}
-	defer delete(data, context.allocator)
+	defer delete(data)
 
 	it := string(data)
 	hosts := make([dynamic]string)
