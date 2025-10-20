@@ -16,6 +16,9 @@ main :: proc() {
 	defer delete(data, context.allocator)
 
 	it := string(data)
+	hosts := make([dynamic]string)
+	defer delete(hosts)
+
 	for line in strings.split_lines_iterator(&it) {
 		// ignore empty lines and commented lines
 		if line == "" || strings.has_prefix(line, "#") {
@@ -24,7 +27,19 @@ main :: proc() {
 		// expect every line to be of the form
 		// 0.0.0.0 some.fqdn
 		_, _, host := strings.partition(line, " ")
-		
-		fmt.println(host)
+		append(&hosts, host)
 	}
+
+	unbound_builder := strings.builder_make()
+	defer strings.builder_destroy(&unbound_builder)
+
+	for host in hosts {
+		strings.write_string(&unbound_builder, format_unbound(host))
+	}
+
+	fmt.print(strings.to_string(unbound_builder))
+}
+
+format_unbound :: proc(host: string) -> string {
+	return fmt.tprintf("local-zone: \"%s\" always_refuse\n", host)
 }
