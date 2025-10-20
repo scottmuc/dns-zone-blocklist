@@ -11,7 +11,8 @@ main :: proc() {
 	// https://odin-lang.org/news/read-a-file-line-by-line/
 	data, ok := os.read_entire_file(hostsPath, context.allocator)
 	if !ok {
-		return
+		fmt.eprintln("Failed to read git/StevenBlack/hosts/hosts")
+		os.exit(1)
 	}
 	defer delete(data, context.allocator)
 
@@ -34,10 +35,15 @@ main :: proc() {
 	defer strings.builder_destroy(&unbound_builder)
 
 	for host in hosts {
+		defer free_all(context.temp_allocator)
 		strings.write_string(&unbound_builder, format_unbound(host))
 	}
 
-	fmt.print(strings.to_string(unbound_builder))
+	ok = os.write_entire_file("unbound/unbound.blocklist", unbound_builder.buf[:])
+	if !ok {
+		fmt.eprintln("Failed to write unbound/unbound.blocklist")
+		os.exit(1)
+	}
 }
 
 format_unbound :: proc(host: string) -> string {
@@ -57,7 +63,7 @@ format_dnsmasq_server :: proc(host: string) -> string {
 }
 
 format_bind :: proc(host: string) -> string {
-	return fmt.tprintf("zone \"%s\" { type master; notify no; file \"null.zone.file\"; };", host)
+	return fmt.tprintf("zone \"%s\" { type master; notify no; file \"null.zone.file\"; };\n", host)
 }
 
 format_bind_nxdomain :: proc(host: string) -> string {
