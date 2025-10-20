@@ -43,3 +43,23 @@ main :: proc() {
 format_unbound :: proc(host: string) -> string {
 	return fmt.tprintf("local-zone: \"%s\" always_refuse\n", host)
 }
+
+format_unbound_nx_domain :: proc(host: string) -> string {
+	return fmt.tprintf("local-zone: \"%s\" always_nxdomain\n", host)
+}
+
+format_dnsmasq :: proc(host: string) -> string {
+	return fmt.tprintf("address=/%s/0.0.0.0\n", host)
+}
+
+format_dnsmasq_server :: proc(host: string) -> string {
+	return fmt.tprintf("server=/%s/\n", host)
+}
+
+format_bind :: proc(host: string) -> string {
+	return fmt.tprintf("zone \"%s\" { type master; notify no; file \"null.zone.file\"; };", host)
+}
+
+format_bind_nxdomain :: proc(host: string) -> string {
+	return fmt.tprintf("%s CNAME . \n*.%s CNAME .\n", host, host)
+}
