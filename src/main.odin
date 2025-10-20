@@ -5,6 +5,9 @@ import "core:os"
 import "core:strings"
 
 main :: proc() {
+	// IDEA rather than hard code the file path, or take a
+	// file path as an argument, I could consume stdin
+
 	// path is relative to PWD
 	hostsPath := "git/StevenBlack/hosts/hosts"
 
@@ -39,6 +42,9 @@ main :: proc() {
 		strings.write_string(&unbound_builder, format_unbound(host))
 	}
 
+	// IDEA wrather than hard code output paths, I could take an argument
+	// for what format I want and redirect the output to the desired file
+	// and orchestrate all this via make
 	ok = os.write_entire_file("unbound/unbound.blocklist", unbound_builder.buf[:])
 	if !ok {
 		fmt.eprintln("Failed to write unbound/unbound.blocklist")
