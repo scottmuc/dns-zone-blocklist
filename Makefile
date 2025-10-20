@@ -9,7 +9,7 @@ run: $(SB_HOST_PATH)
 
 $(SB_HOST_PATH):
 	mkdir -p git/StevenBlack
-	git clone --deptch 1 $(SB_HOSTS_REPO) $(SB_HOST_PATH)
+	git clone --depth 1 $(SB_HOSTS_REPO) $(SB_HOST_PATH)
 
 update:
 	cd $(SB_HOST_PATH) && git pull
