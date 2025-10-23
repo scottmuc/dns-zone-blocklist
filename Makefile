@@ -1,6 +1,6 @@
 SB_HOSTS_REPO = https://github.com/StevenBlack/hosts.git
 SB_HOST_PATH = git/StevenBlack/hosts
-ODIN = ~/workspace/Odin/odin 
+ODIN = odin
 
 .PHONY: update \
 	 unbound unbound_nxdomain \
