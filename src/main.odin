@@ -2,6 +2,7 @@ package main
 
 import "core:fmt"
 import "core:os"
+import "core:slice"
 import "core:strings"
 
 main :: proc() {
@@ -24,6 +25,8 @@ main :: proc() {
 		fmt.println("dns-zone-blocklist. IN NS localhost.\n")
 	}
 
+	hosts_to_allow := []string{ "local", "localhost", "localhost.localdomain", "broadcasthost", "sbc" }
+
 	it := string(data)
 	for line in strings.split_lines_iterator(&it) {
 		if line == "" || strings.has_prefix(line, "#") {
@@ -32,6 +35,10 @@ main :: proc() {
 		// expect every line to be of the form
 		// 0.0.0.0 some.fqdn
 		_, _, host := strings.partition(line, " ")
+
+		if slice.contains(hosts_to_allow, host) {
+			continue
+		}
 
 		switch filter_name {
 		case "unbound":
