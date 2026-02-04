@@ -34,7 +34,12 @@ main :: proc() {
 		}
 		// expect every line to be of the form
 		// 0.0.0.0 some.fqdn
-		_, _, host := strings.partition(line, " ")
+		// or
+		// 0.0.0.0 some.fqdn #and some comment
+		// 0.0.0.0 some.fqdn # and some comment
+		ip_domain, _, _ := strings.partition(line, "#")
+		_, _, host := strings.partition(ip_domain, " ")
+		host = strings.trim_right_space(host)
 
 		if slice.contains(hosts_to_allow, host) {
 			continue
