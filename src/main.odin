@@ -5,13 +5,19 @@ import "core:os"
 import "core:slice"
 import "core:strings"
 
+import vmem "core:mem/virtual"
+
 main :: proc() {
-	data, ok := os.read_entire_file(os.stdin)
-	if !ok {
-		fmt.eprintln("Failed to read hosts from stdin")
-		os.exit(1)
-	}
-	defer delete(data)
+	// This creates a growing virtual memory arena. It uses virtual memory and
+	// can grow as things are added to it.
+	arena: vmem.Arena
+	arena_err := vmem.arena_init_growing(&arena)
+	ensure(arena_err == nil)
+	arena_alloc := vmem.arena_allocator(&arena)
+
+	data, ok := os.read_entire_file(os.stdin, arena_alloc)
+	ensure(ok == nil)
+	defer vmem.arena_destroy(&arena)
 
 	if len(os.args) != 2 {
 		fmt.eprintln("Did not specify type of filter")
